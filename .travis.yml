@@ -8,5 +8,7 @@ deploy:
   file:
   - dist/nerve-center.js
   - dist/nerve-center.min.js
+  skip_cleanup: true
   on:
     repo: tdukart/nerve-center
+    tags: true

@@ -1,0 +1,17 @@
+{
+  "name": "nerve-center",
+  "description": "Lightweight message library for games",
+  "main": "dist/nerve-center.js",
+  "authors": [
+    "Todd Dukart <tdukart@aloftinteractive.com>"
+  ],
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/tdukart/nerve-center",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

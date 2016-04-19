@@ -6,7 +6,7 @@ allows your app to broadcast messages on specific channels and create listeners 
 
 The impetus of this library is to simplify the creation of a master controller that a game could extend to handle a
 multitude of broadcasts simply and safely. Although similar in spirit to jQuery's event system (although, of course,
-not bound to the DOM), 
+not bound to the DOM), this is designed as a prototype to be extended into a full-featured controller.
 
 Roadmap
 -------

@@ -1,5 +1,10 @@
 // var _ = require( 'underscore' );
 
+/**
+ * Creates a new NerveCenter.
+ * @returns {NerveCenter}
+ * @constructor
+ */
 var NerveCenter = function () {
 	this._events = {};
 
@@ -11,6 +16,7 @@ var NerveCenter = function () {
  * @param {string} channelName
  * @returns {{ns: string, name:string}}
  * @private
+ * @ignore
  */
 var splitChannelName = function ( channelName ) {
 	var subscriptionSplit = /(?:([a-z0-9-_]*)\.)?([a-z0-9-_]*)/.exec( channelName );

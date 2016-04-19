@@ -12,6 +12,14 @@ module.exports = function ( grunt ) {
 				dest: 'build/<%= pkg.name %>.min.js'
 			}
 		},
+		jsdoc     : {
+			dist: {
+				src    : [ 'src/*.js', 'test/*.js' ],
+				options: {
+					destination: 'doc'
+				}
+			}
+		},
 		browserify: {
 			options: {
 				banner    : '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
@@ -30,12 +38,12 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-browserify' );
-	// grunt.loadNpmTasks('grunt-reactify');
+	grunt.loadNpmTasks( 'grunt-jsdoc' );
 
 	// Default task(s).
 	grunt.registerTask( 'default', [ 'compile' ] );
 
 	grunt.registerTask( 'compile', [ 'browserify' ] );
-	grunt.registerTask( 'dist', [ 'compile', 'uglify' ] );
+	grunt.registerTask( 'dist', [ 'compile', 'uglify', 'jsdoc' ] );
 
 };

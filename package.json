@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tdukart/nerve-center"
+  },
   "author": "Todd Dukart <tdukart@aloftinteractive.com>",
   "license": "BSD-3-Clause",
   "devDependencies": {
@@ -15,5 +19,6 @@
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-jsdoc": "^1.1.0",
     "statics": "^0.1.0"
-  }
+  },
+  "dependencies": {}
 }

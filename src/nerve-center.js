@@ -98,9 +98,9 @@ NerveCenter.prototype.unsubscribe = function ( channelName, handler ) {
 NerveCenter.prototype.broadcast = function ( channelName, message ) {
 	var handlers = [], nestedEvents;
 
-	if ( this._events[ channelName ] ) {
+	if ( undefined !== this._events[ channelName ] ) {
 		nestedEvents = this._events[ channelName ];
-		Object.keys( nestedEvents[ channelName ] ).forEach( function ( namespace ) {
+		Object.keys( nestedEvents ).forEach( function ( namespace ) {
 			handlers = handlers.concat( nestedEvents[ namespace ] );
 		} );
 	}

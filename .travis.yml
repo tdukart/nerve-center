@@ -2,13 +2,20 @@ language: node_js
 node_js:
 - '5'
 deploy:
-  provider: releases
-  api_key:
-    secure: mekFFmPo0yWmb2xO43kNC/c8a1jjEZDS9BcaEjE5hlkq2YqGObBU/BnW7am/6spllgmhPsN4mlDViw2mzhveKZr/kAjYL6NL8tZ/9jNsgh76/gltztP1Q1rjU3TFlw8G+rAziu1SIKrAU+uxjzWzkb87XdjPvZStLO4MQF6mNpCQwV1SJeQ0BJ0hSeRFO+5T8ejmMGCZMgJbeXF1qCskGffPAXOOF55AMFFWh7WPB2VX35exyqVXRWKL5H9rhKcQsuJt4N8QAugt+IC1AwEx7kIYPwigSRgMdZb2Lr2UagbPaMpEI/IEBDOFO0cX5QdncEWjYU3aMdY7irm4Umuu/p9uFx+S4rBDLm69weGRqGrb5Z2Jeu3tXhhXjfq/vj+IwDKWcj2eHzzQsIkruFNf9b9dTbiKqGoaVWeTvZ0TBM9rEqh1SRIc5OoRl1pgZIkBCsAAGyNGJvJ8DV8kNLNZLTHXVdnNX1uyZAlilSTBEOkH5RVlgPkDNBtwClknx5e5hz2s5ibxp7Ol+VHb5QMps8V3tdR3MPh0nTtA6hDwJvcSGV3RDZtRz/mAZkkZzHTN5RhNoM++ZizHgHZ7V1dtr4f53KD58f6IWx/YgkzfNCR6OeQcH8ZzaUSCNQ67ys5v2K9/ZDmOT9nEouWIJg3VR86a5xRmU8w0A/iwbtzaacA=
-  file:
-  - dist/nerve-center.js
-  - dist/nerve-center.min.js
-  skip_cleanup: true
-  on:
-    repo: tdukart/nerve-center
-    tags: true
+  - provider: releases
+    api_key:
+      secure: mekFFmPo0yWmb2xO43kNC/c8a1jjEZDS9BcaEjE5hlkq2YqGObBU/BnW7am/6spllgmhPsN4mlDViw2mzhveKZr/kAjYL6NL8tZ/9jNsgh76/gltztP1Q1rjU3TFlw8G+rAziu1SIKrAU+uxjzWzkb87XdjPvZStLO4MQF6mNpCQwV1SJeQ0BJ0hSeRFO+5T8ejmMGCZMgJbeXF1qCskGffPAXOOF55AMFFWh7WPB2VX35exyqVXRWKL5H9rhKcQsuJt4N8QAugt+IC1AwEx7kIYPwigSRgMdZb2Lr2UagbPaMpEI/IEBDOFO0cX5QdncEWjYU3aMdY7irm4Umuu/p9uFx+S4rBDLm69weGRqGrb5Z2Jeu3tXhhXjfq/vj+IwDKWcj2eHzzQsIkruFNf9b9dTbiKqGoaVWeTvZ0TBM9rEqh1SRIc5OoRl1pgZIkBCsAAGyNGJvJ8DV8kNLNZLTHXVdnNX1uyZAlilSTBEOkH5RVlgPkDNBtwClknx5e5hz2s5ibxp7Ol+VHb5QMps8V3tdR3MPh0nTtA6hDwJvcSGV3RDZtRz/mAZkkZzHTN5RhNoM++ZizHgHZ7V1dtr4f53KD58f6IWx/YgkzfNCR6OeQcH8ZzaUSCNQ67ys5v2K9/ZDmOT9nEouWIJg3VR86a5xRmU8w0A/iwbtzaacA=
+    file:
+      - dist/nerve-center.js
+      - dist/nerve-center.min.js
+    skip_cleanup: true
+    on:
+      repo: tdukart/nerve-center
+      tags: true
+  - provider: npm
+    email: tdukart@aloftinteractive.com
+    api_key:
+      secure: PbFFoMqQ3+NeUT0wFPzkmqKs8FTgMWCq0svTnVcMc342YObl+vgXTRbVWkPVwZnePSlYZIL0Ac/sXbPg7z4zLqovIMKO/bqKcFEd37pH7Uq5M2pTAxpARL52IxC+DOgdFl9XUlbVTep/gwgmzMTC5mfoK6MFcNBvxUMke62ovriyH8vopS4w/aaKN3Liw7b/hXFtsJN98zJ25EbzGGleP2xeVNlNfZikxu2eovEmdz3duRMq70zA8Bf9avaYNPYQ9quVszQkveUzA1timL2fn1LIW+MXeoNkV5kjWmn8mp/N76lqjmCjHFxnshmgBr8bA8HdIVbhPQXNaua1HQZcNBDH6MOBeHYIlMVPjOAz46Nr7dmhxvMPHsJZcD/m2D+ylRKDewAtgIxMuMNVz3EbrlFv8Juno2o6mnkDiPYcR7e6SRp1g7+ajoZNKAdMV3/yMHg1IiRbBHHUPR2zo70fxI+DmUYaQJeVBvmyvioyES2p5JnAAMEuyjtIoVI3gr9EsoHDGL0c2Yg3Ro+VywUKm1F0XvJfypK8HPJUOYykkDUl/0U99vtuRBdjD0ZoDEyzU4H2yL+PdNZh8JowBr1OPeZEay18PSCLKLqHtBwgGKZUcaybEj5En5ZUj94WILAcO+eygXN2ZTHq0PPnG6uXiNyRCrwEKxUgkzHWLY0UtqU=
+    on:
+      repo: tdukart/nerve-center
+      tags: true

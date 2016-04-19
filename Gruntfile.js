@@ -5,11 +5,14 @@ module.exports = function ( grunt ) {
 		pkg       : grunt.file.readJSON( 'package.json' ),
 		uglify    : {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+				banner: '/*! nerveCenter\n' +
+				' * (c) 2016 Todd Dukart\n' +
+				' * https://opensource.org/licenses/BSD-3-Clause\n' +
+				' */\n'
 			},
 			build  : {
-				src : 'build/<%= pkg.name %>.js',
-				dest: 'build/<%= pkg.name %>.min.js'
+				src : 'dist/<%= pkg.name %>.js',
+				dest: 'dist/<%= pkg.name %>.min.js'
 			}
 		},
 		jsdoc     : {
@@ -22,12 +25,13 @@ module.exports = function ( grunt ) {
 		},
 		browserify: {
 			options: {
-				banner    : '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-				debug     : true,
-				extensions: [ '.jsx' ]
+				banner: '/*! nerveCenter\n' +
+				' * (c) 2016 Todd Dukart\n' +
+				' * https://opensource.org/licenses/BSD-3-Clause\n' +
+				' */\n',
 			},
 			build  : {
-				dest  : 'build',
+				dest  : 'dist',
 				src   : [ '**/*.js', '**/*.jsx' ],
 				cwd   : 'src',
 				expand: true,

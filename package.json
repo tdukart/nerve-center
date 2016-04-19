@@ -2,8 +2,9 @@
   "name": "nerve-center",
   "version": "0.0.1",
   "description": "Lightweight message library for games",
-  "main": "index.js",
+  "main": "dist/nerve-center.js",
   "scripts": {
+    "install": "grunt dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

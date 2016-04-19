@@ -1,5 +1,3 @@
-// var _ = require( 'underscore' );
-
 /**
  * Creates a new NerveCenter.
  * @returns {NerveCenter}

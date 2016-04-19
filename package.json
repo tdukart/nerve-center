@@ -15,8 +15,5 @@
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-jsdoc": "^1.1.0",
     "statics": "^0.1.0"
-  },
-  "dependencies": {
-    "underscore": "^1.8.3"
   }
 }

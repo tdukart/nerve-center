@@ -1,0 +1,21 @@
+{
+	"name": "nerve-center",
+	"version": "0.0.1",
+	"description": "Lightweight message library for games",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Todd Dukart <tdukart@aloftinteractive.com>",
+	"license": "MIT",
+	"devDependencies": {
+		"browserify": "^13.0.0",
+		"grunt": "^1.0.1",
+		"grunt-browserify": "^5.0.0",
+		"grunt-contrib-uglify": "^1.0.1",
+		"statics": "^0.1.0"
+	},
+	"dependencies": {
+		"underscore": "^1.8.3"
+	}
+}

@@ -1,6 +1,8 @@
 NerveCenter
 ===========
 
+[![Build Status](https://travis-ci.org/tdukart/nerve-center.svg?branch=master)](https://travis-ci.org/tdukart/nerve-center)
+
 NerveCenter is a lightweight JavaScript library to aid the development of simple games (or probably other apps!). It
 allows your app to broadcast messages on specific channels and create listeners for them.
 

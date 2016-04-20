@@ -5,6 +5,8 @@
  */
 var NerveCenter = function () {
 	this._events = {};
+	this._dataFormats = {};
+	this._data = {};
 
 	return this;
 };
@@ -110,6 +112,105 @@ NerveCenter.prototype.broadcast = function ( channelName, message ) {
 			handler.call( this, channelName, message );
 		}
 	} );
+};
+
+var supportedTypes = [ 'object', 'boolean', 'number', 'string', 'any' ];
+
+/**
+ * Initialize a data point, possibly with a type and an initial value.
+ * @param {string} key
+ * @param {string} [type]
+ * @param {*} [initialValue]
+ */
+NerveCenter.prototype.initializeDataPoint = function ( key, type, initialValue ) {
+	type = type || 'any';
+	if ( -1 === supportedTypes.indexOf( type ) ) {
+		throw new Error( 'Invalid data point type' );
+	}
+
+	if ( undefined !== this._dataFormats[ key ] ) {
+		throw new Error( 'Data point already defined' );
+	}
+
+	this._dataFormats[ key ] = type;
+
+	this.setDataPoint( key, initialValue );
+};
+
+/**
+ * Set the value of a data point.
+ * @param {string} key
+ * @param {*} value
+ * @throws {TypeError} Thrown when the type of value is not allowed under the way the point was initialized.
+ */
+NerveCenter.prototype.setDataPoint = function ( key, value ) {
+	if ( undefined === this._dataFormats[ key ] ) {
+		this.initializeDataPoint( key, 'any', value );
+	} else {
+		// Allow nulls
+		if ( undefined === value ) {
+			value = null;
+		}
+		if ( 'any' !== this._dataFormats[ key ] && null !== value && typeof value !== this._dataFormats[ key ] ) {
+			throw new TypeError( 'Unexpected data type' );
+		}
+		var oldValue = this._data[ key ];
+		this._data[ key ] = value;
+		this.broadcast( 'data-' + key, {
+			key     : key,
+			oldValue: oldValue,
+			newValue: value
+		} );
+	}
+};
+
+/**
+ * Gets the value of a data point.
+ * @param {string} key
+ * @returns {*}
+ */
+NerveCenter.prototype.getDataPoint = function ( key ) {
+	return this._data[ key ];
+};
+
+var formatDataKey = function ( key ) {
+	var splitKey = splitChannelName( key ),
+		channel = '';
+	if ( '' !== splitKey.ns ) {
+		channel = splitKey.ns + '.';
+	}
+
+	channel += 'data-' + splitKey.name;
+
+	return channel;
+};
+
+/**
+ * Subscribes to changes in a data point.
+ * @param {string} key
+ * @param {function(*)} handler
+ */
+NerveCenter.prototype.subscribeToDataPoint = function ( key, handler ) {
+	var channel = formatDataKey( key );
+
+	var wrappedHandler = function ( channelName, message ) {
+		handler( message );
+	};
+
+	this.subscribe( channel, wrappedHandler );
+};
+
+NerveCenter.prototype.unsubscribeFromDataPoint = function ( key, handler ) {
+	var channel = formatDataKey( key );
+
+	var wrappedHandler;
+	if ( undefined !== handler ) {
+		wrappedHandler = function ( channelName, message ) {
+			handler( message );
+		};
+	}
+
+	this.unsubscribe( channel, wrappedHandler );
 };
 
 module.exports = NerveCenter;

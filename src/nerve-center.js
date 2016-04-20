@@ -4,7 +4,7 @@
  * @constructor
  */
 var NerveCenter = function () {
-	this._events = {};
+	this._subscriptions = {};
 
 	return this;
 };
@@ -20,7 +20,7 @@ var splitChannelName = function ( channelName ) {
 	var subscriptionSplit = /(?:([a-z0-9-_]*)\.)?([a-z0-9-_]*)/.exec( channelName );
 
 	if ( subscriptionSplit[ 0 ] !== channelName ) {
-		throw new Error( 'Invalid event name' );
+		throw new Error( 'Invalid channel name' );
 	}
 
 	return {
@@ -30,7 +30,7 @@ var splitChannelName = function ( channelName ) {
 };
 
 /**
- * Subscribe to an event.
+ * Subscribe to a channel.
  *
  * Call this method with a channel name, which can be namespaced. (It's recommended that all subscriptions be
  * namespaced.) When a message is broadcast, the handler will be called with the channel name and message.
@@ -41,15 +41,15 @@ var splitChannelName = function ( channelName ) {
 NerveCenter.prototype.subscribe = function ( channelName, handler ) {
 	var subscription = splitChannelName( channelName );
 
-	this._events[ subscription.name ] = this._events[ subscription.name ] || {};
-	this._events[ subscription.name ][ subscription.ns ] = this._events[ subscription.name ][ subscription.ns ] || [];
-	this._events[ subscription.name ][ subscription.ns ].push( handler );
+	this._subscriptions[ subscription.name ] = this._subscriptions[ subscription.name ] || {};
+	this._subscriptions[ subscription.name ][ subscription.ns ] = this._subscriptions[ subscription.name ][ subscription.ns ] || [];
+	this._subscriptions[ subscription.name ][ subscription.ns ].push( handler );
 };
 
 /**
- * Unsubscribe from an event.
+ * Unsubscribe from a channel.
  *
- * Call this method with a channel name, which can be namespaced. If you namespaced the event while subscribing, it's
+ * Call this method with a channel name, which can be namespaced. If you namespaced the channel while subscribing, it's
  * recommended that you use the same namespace here, to avoid unsubscribing other listeners. You may also pass the
  * handler to unsubscribe, in which case only that handler will be unsubscribed.
  *
@@ -59,32 +59,32 @@ NerveCenter.prototype.subscribe = function ( channelName, handler ) {
 NerveCenter.prototype.unsubscribe = function ( channelName, handler ) {
 	var subscription = splitChannelName( channelName );
 
-	if ( this._events[ subscription.name ] ) {
+	if ( this._subscriptions[ subscription.name ] ) {
 		if ( subscription.ns ) {
 			if ( undefined !== handler ) {
 				// We have a namespace and a handler. Remove any listeners within the namespace with the matching
 				// handler.
-				this._events[ subscription.name ][ subscription.ns ] =
-					this._events[ subscription.name ][ subscription.ns ].filter( function ( handlerA ) {
+				this._subscriptions[ subscription.name ][ subscription.ns ] =
+					this._subscriptions[ subscription.name ][ subscription.ns ].filter( function ( handlerA ) {
 						return handlerA !== handler;
 					} );
 			} else {
 				// We have a namespace, but no handler. Remove all listeners within the namespace.
-				this._events[ subscription.name ][ subscription.ns ] = [];
+				this._subscriptions[ subscription.name ][ subscription.ns ] = [];
 			}
 		} else {
 			if ( undefined !== handler ) {
 				// We have no namespace, but we do have a handler. Remove any listeners in any namespace with the
 				// matching handler.
-				Object.keys( this._events[ subscription.name ] ).forEach( function ( namespace ) {
-					this._events[ subscription.name ][ namespace ] =
-						this._events[ subscription.name ][ namespace ].filter( function ( handlerA ) {
+				Object.keys( this._subscriptions[ subscription.name ] ).forEach( function ( namespace ) {
+					this._subscriptions[ subscription.name ][ namespace ] =
+						this._subscriptions[ subscription.name ][ namespace ].filter( function ( handlerA ) {
 							return handlerA !== handler;
 						} );
 				}, this );
 			} else {
 				// We have no handler or namespace. Remove all listeners.
-				this._events[ subscription.name ] = {};
+				this._subscriptions[ subscription.name ] = {};
 			}
 		}
 	}
@@ -96,12 +96,12 @@ NerveCenter.prototype.unsubscribe = function ( channelName, handler ) {
  * @param {{}} message
  */
 NerveCenter.prototype.broadcast = function ( channelName, message ) {
-	var handlers = [], nestedEvents;
+	var handlers = [], nestedSubscriptions;
 
-	if ( undefined !== this._events[ channelName ] ) {
-		nestedEvents = this._events[ channelName ];
-		Object.keys( nestedEvents ).forEach( function ( namespace ) {
-			handlers = handlers.concat( nestedEvents[ namespace ] );
+	if ( undefined !== this._subscriptions[ channelName ] ) {
+		nestedSubscriptions = this._subscriptions[ channelName ];
+		Object.keys( nestedSubscriptions ).forEach( function ( namespace ) {
+			handlers = handlers.concat( nestedSubscriptions[ namespace ] );
 		} );
 	}
 

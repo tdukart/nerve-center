@@ -4,6 +4,7 @@
   "description": "Lightweight message library for games",
   "main": "src/nerve-center.js",
   "scripts": {
+    "prepublish": "grunt dist",
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {

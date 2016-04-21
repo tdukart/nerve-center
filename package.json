@@ -2,9 +2,8 @@
   "name": "nerve-center",
   "version": "0.0.2",
   "description": "Lightweight message library for games",
-  "main": "dist/nerve-center.js",
+  "main": "src/nerve-center.js",
   "scripts": {
-    "install": "grunt dist",
     "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {

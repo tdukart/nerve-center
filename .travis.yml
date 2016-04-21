@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-- '5'
+  - '5'
+script:
+  - 'grunt dist'
 deploy:
   - provider: releases
     api_key:

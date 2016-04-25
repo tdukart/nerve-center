@@ -21,6 +21,40 @@ describe( 'NerveCenter messaging', function () {
 		);
 	} );
 
+	it( 'allows for uppercase letters in an event', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.subscribe( 'camelCasedEvent', callback );
+
+		nc.broadcast( 'camelCasedEvent', { text: 'hello world' } );
+
+		expect( callback ).toHaveBeenCalledWith(
+			'camelCasedEvent',
+			jasmine.objectContaining( {
+				text: 'hello world'
+			} )
+		);
+	} );
+
+	it( 'allows for uppercase letters in a namespaced event', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.subscribe( 'myNamespace.camelCasedEvent', callback );
+
+		nc.broadcast( 'camelCasedEvent', { text: 'hello world' } );
+
+		expect( callback ).toHaveBeenCalledWith(
+			'camelCasedEvent',
+			jasmine.objectContaining( {
+				text: 'hello world'
+			} )
+		);
+	} );
+
 	it( 'unbinds a namespaced callback', function () {
 
 		var nc = new NerveCenter();

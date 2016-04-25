@@ -19,7 +19,7 @@ var NerveCenter = function () {
  * @ignore
  */
 var splitChannelName = function ( channelName ) {
-	var subscriptionSplit = /(?:([a-z0-9-_]*)\.)?([a-z0-9-_]*)/.exec( channelName );
+	var subscriptionSplit = /(?:([a-z0-9-_]*)\.)?([a-z0-9-_]*)/i.exec( channelName );
 
 	if ( subscriptionSplit[ 0 ] !== channelName ) {
 		throw new Error( 'Invalid channel name' );

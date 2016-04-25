@@ -1,7 +1,10 @@
 NerveCenter
 ===========
 
-[![Build Status](https://travis-ci.org/tdukart/nerve-center.svg?branch=master)](https://travis-ci.org/tdukart/nerve-center)
+[![Travis](https://img.shields.io/travis/tdukart/nerve-center.svg?maxAge=2592000)](https://travis-ci.org/tdukart/nerve-center)
+[![npm](https://img.shields.io/npm/v/nerve-center.svg?maxAge=2592000)](https://www.npmjs.com/package/nerve-center)
+[![Requires.io](https://img.shields.io/requires/github/tdukart/nerve-center.svg?maxAge=2592000)](https://requires.io/github/tdukart/nerve-center/requirements/?branch=master)
+<!--[![Dependencies](https://img.shields.io/versioneye/d/tdukart/nerve-center.svg?maxAge=2592000)](https://requires.io/github/tdukart/nerve-center/requirements/?branch=master)-->
 
 NerveCenter is a lightweight JavaScript library to aid the development of simple games (or probably other apps!). It
 allows your app to broadcast messages on specific channels and create listeners for them.

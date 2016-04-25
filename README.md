@@ -10,11 +10,7 @@ The impetus of this library is to simplify the creation of a master controller t
 multitude of broadcasts simply and safely. Although similar in spirit to jQuery's event system (although, of course,
 not bound to the DOM), this is designed as a prototype to be extended into a full-featured controller.
 
-Roadmap
--------
-- Milestone1: Local events with publish and subscribe methods
-- Milestone2: JSON-based server communication
-- Milestone3: Permissioning (only allow player1 client to publish player1 events)
+This library is not affiliated with any of the author's current or past employers.
 
 License
 =======

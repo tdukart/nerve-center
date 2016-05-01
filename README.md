@@ -2,6 +2,7 @@ NerveCenter
 ===========
 
 [![Travis](https://img.shields.io/travis/tdukart/nerve-center.svg?maxAge=2592000)](https://travis-ci.org/tdukart/nerve-center)
+[![devDependency Status](https://david-dm.org/tdukart/nerve-center/dev-status.svg)](https://david-dm.org/tdukart/nerve-center#info=devDependencies)
 [![npm](https://img.shields.io/npm/v/nerve-center.svg?maxAge=2592000)](https://www.npmjs.com/package/nerve-center)
 <!--[![Dependencies](https://img.shields.io/versioneye/d/tdukart/nerve-center.svg?maxAge=2592000)](https://requires.io/github/tdukart/nerve-center/requirements/?branch=master)-->
 

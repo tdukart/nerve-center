@@ -156,12 +156,23 @@ NerveCenter.prototype.setDataPoint = function ( key, value ) {
 		}
 		var oldValue = this._data[ key ];
 		this._data[ key ] = value;
-		this.broadcast( 'data-' + key, {
-			key     : key,
-			oldValue: oldValue,
-			newValue: value
-		} );
+		this._triggerDataPointChange( key, oldValue, value );
 	}
+};
+
+/**
+ * Triggers the event for the change of a data point.
+ * @param key
+ * @param oldValue
+ * @param newValue
+ * @private
+ */
+NerveCenter.prototype._triggerDataPointChange = function ( key, oldValue, newValue ) {
+	this.broadcast( 'data-' + key, {
+		key     : key,
+		oldValue: oldValue,
+		newValue: newValue
+	} );
 };
 
 /**
@@ -211,6 +222,69 @@ NerveCenter.prototype.unsubscribeFromDataPoint = function ( key, handler ) {
 	}
 
 	this.unsubscribe( channel, wrappedHandler );
+};
+
+/**
+ * Performs a 'pop', 'shift', 'unshift', or 'push' method on a dataPoint array
+ * @param {string} key
+ * @param {string} method One of 'pop', 'shift', 'unshift', or 'push'
+ * @param {Array} [elements] Required if method is 'push' or 'unshift'
+ * @returns {*}
+ * @private
+ */
+NerveCenter.prototype._performArrayMethod = function ( key, method, elements ) {
+	if ( !Array.isArray( this._data[ key ] ) ) {
+		throw new TypeError();
+	}
+	if ( ('push' === method || 'unshift' === method) && 'undefined' === typeof elements ) {
+		throw new Error( 'Need value' );
+	}
+
+	var oldValue = this._data[ key ].slice( 0 );
+
+	var result = Array.prototype[ method ].apply( this._data[ key ], elements || [] );
+	this._triggerDataPointChange( key, oldValue, this._data[ key ] );
+	return result;
+};
+
+/**
+ * Removes the last element off of the given array, returning it.
+ * @param {string} key
+ * @returns {*}
+ */
+NerveCenter.prototype.popDataPoint = function ( key ) {
+	return this._performArrayMethod( key, 'pop' );
+};
+
+/**
+ * Adds an element at the end of the given array
+ * @param {string} key
+ * @param {...*} element
+ * @returns {number} The new length of the array
+ */
+NerveCenter.prototype.pushDataPoint = function ( key, element ) {
+	var args = (arguments.length === 1 ? [ arguments[ 0 ] ] : Array.apply( null, arguments ));
+	return this._performArrayMethod( key, 'push', args.slice( 1 ) );
+};
+
+/**
+ * Removes the first element off of the given array, returning it.
+ * @param {string} key
+ * @returns {*}
+ */
+NerveCenter.prototype.shiftDataPoint = function ( key ) {
+	return this._performArrayMethod( key, 'shift' );
+};
+
+/**
+ * Adds an element at the beginning of the given array
+ * @param {string} key
+ * @param {...*} element
+ * @returns {number} The new length of the array
+ */
+NerveCenter.prototype.unshiftDataPoint = function ( key, element ) {
+	var args = (arguments.length === 1 ? [ arguments[ 0 ] ] : Array.apply( null, arguments ));
+	return this._performArrayMethod( key, 'unshift', args.slice( 1 ) );
 };
 
 module.exports = NerveCenter;

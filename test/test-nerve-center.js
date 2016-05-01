@@ -209,4 +209,106 @@ describe( 'NerveCenter data points', function () {
 
 	} );
 
+	it( 'can pop on a dataPoint array', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.initializeDataPoint( 'greetings', 'object', [ 'hello', 'hola' ] );
+
+		nc.subscribeToDataPoint( 'greetings', callback );
+
+		var result = nc.popDataPoint( 'greetings' );
+		var greetingsArray = nc.getDataPoint( 'greetings' );
+
+		expect( result ).toBe( 'hola' );
+		expect( callback ).toHaveBeenCalled();
+		expect( greetingsArray ).toEqual( [ 'hello' ] );
+	} );
+
+	it( 'can push on a dataPoint array', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.initializeDataPoint( 'greetings', 'object', [ 'hello' ] );
+
+		nc.subscribeToDataPoint( 'greetings', callback );
+
+		var result = nc.pushDataPoint( 'greetings', 'hola' );
+		var greetingsArray = nc.getDataPoint( 'greetings' );
+
+		expect( result ).toBe( 2 );
+		expect( callback ).toHaveBeenCalled();
+		expect( greetingsArray ).toEqual( [ 'hello', 'hola' ] );
+	} );
+
+	it( 'can push multiple elements on a dataPoint array', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.initializeDataPoint( 'greetings', 'object', [ 'hello' ] );
+
+		nc.subscribeToDataPoint( 'greetings', callback );
+
+		var result = nc.pushDataPoint( 'greetings', 'hola', 'howdy' );
+		var greetingsArray = nc.getDataPoint( 'greetings' );
+
+		expect( result ).toBe( 3 );
+		expect( callback ).toHaveBeenCalled();
+		expect( greetingsArray ).toEqual( [ 'hello', 'hola', 'howdy' ] );
+	} );
+
+	it( 'can shift on a dataPoint array', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.initializeDataPoint( 'greetings', 'object', [ 'hello', 'hola' ] );
+
+		nc.subscribeToDataPoint( 'greetings', callback );
+
+		var result = nc.shiftDataPoint( 'greetings' );
+		var greetingsArray = nc.getDataPoint( 'greetings' );
+
+		expect( result ).toBe( 'hello' );
+		expect( callback ).toHaveBeenCalled();
+		expect( greetingsArray ).toEqual( [ 'hola' ] );
+	} );
+
+	it( 'can unshift on a dataPoint array', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.initializeDataPoint( 'greetings', 'object', [ 'hello' ] );
+
+		nc.subscribeToDataPoint( 'greetings', callback );
+
+		var result = nc.unshiftDataPoint( 'greetings', 'hola' );
+		var greetingsArray = nc.getDataPoint( 'greetings' );
+
+		expect( result ).toBe( 2 );
+		expect( callback ).toHaveBeenCalled();
+		expect( greetingsArray ).toEqual( [ 'hola', 'hello' ] );
+	} );
+
+	it( 'can unshift multiple elements on a dataPoint array', function () {
+		var nc = new NerveCenter();
+
+		var callback = jasmine.createSpy( 'callback' );
+
+		nc.initializeDataPoint( 'greetings', 'object', [ 'hello' ] );
+
+		nc.subscribeToDataPoint( 'greetings', callback );
+
+		var result = nc.unshiftDataPoint( 'greetings', 'hola', 'howdy' );
+		var greetingsArray = nc.getDataPoint( 'greetings' );
+
+		expect( result ).toBe( 3 );
+		expect( callback ).toHaveBeenCalled();
+		expect( greetingsArray ).toEqual( [ 'hola', 'howdy', 'hello' ] );
+	} );
+
 } );

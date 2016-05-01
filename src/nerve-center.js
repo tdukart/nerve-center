@@ -44,7 +44,8 @@ NerveCenter.prototype.subscribe = function ( channelName, handler ) {
 	var subscription = splitChannelName( channelName );
 
 	this._subscriptions[ subscription.name ] = this._subscriptions[ subscription.name ] || {};
-	this._subscriptions[ subscription.name ][ subscription.ns ] = this._subscriptions[ subscription.name ][ subscription.ns ] || [];
+	this._subscriptions[ subscription.name ][ subscription.ns ] =
+		this._subscriptions[ subscription.name ][ subscription.ns ] || [];
 	this._subscriptions[ subscription.name ][ subscription.ns ].push( handler );
 };
 

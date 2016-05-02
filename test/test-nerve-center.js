@@ -55,6 +55,23 @@ describe( 'NerveCenter messaging', function () {
 		);
 	} );
 
+	it( 'unbinds all the callbacks', function () {
+		var nc = new NerveCenter();
+
+		var callback1 = jasmine.createSpy( 'callback' );
+		var callback2 = jasmine.createSpy( 'callback' );
+
+		nc.subscribe( 'howdy', callback1 );
+		nc.subscribe( 'howdy', callback2 );
+
+		nc.unsubscribe( 'howdy' );
+
+		nc.broadcast( 'howdy', { text: 'hello world' } );
+
+		expect( callback1 ).not.toHaveBeenCalled();
+		expect( callback2 ).not.toHaveBeenCalled();
+	} );
+
 	it( 'unbinds a namespaced callback', function () {
 
 		var nc = new NerveCenter();
@@ -77,6 +94,40 @@ describe( 'NerveCenter messaging', function () {
 		);
 
 		expect( namespacedCallback ).not.toHaveBeenCalled();
+	} );
+
+	it( 'unbinds a non-namespaced callback', function () {
+		var nc = new NerveCenter();
+
+		var helloCallback = jasmine.createSpy( 'callback' );
+		var buhbyeCallback = jasmine.createSpy( 'callback' );
+
+		nc.subscribe( 'howdy', helloCallback );
+		nc.subscribe( 'howdy', buhbyeCallback );
+
+		nc.unsubscribe( 'howdy', buhbyeCallback );
+
+		nc.broadcast( 'howdy', { text: 'hello world' } );
+
+		expect( helloCallback ).toHaveBeenCalled();
+		expect( buhbyeCallback ).not.toHaveBeenCalled();
+	} );
+
+	it( 'unbinds a namespaced callback with handler', function () {
+		var nc = new NerveCenter();
+
+		var helloCallback = jasmine.createSpy( 'callback' );
+		var buhbyeCallback = jasmine.createSpy( 'callback' );
+
+		nc.subscribe( 'ns.howdy', helloCallback );
+		nc.subscribe( 'ns.howdy', buhbyeCallback );
+
+		nc.unsubscribe( 'ns.howdy', buhbyeCallback );
+
+		nc.broadcast( 'howdy', { text: 'hello world' } );
+
+		expect( helloCallback ).toHaveBeenCalled();
+		expect( buhbyeCallback ).not.toHaveBeenCalled();
 	} );
 
 	it( 'calls multiple callbacks', function () {
@@ -129,6 +180,13 @@ describe( 'NerveCenter data points', function () {
 			nc.setDataPoint( 'shouldBeAString', { thisIs: 'not a string' } );
 		} ).toThrowError( TypeError );
 
+	} );
+
+	it( 'doesn\'t allow unknown data types', function () {
+		var nc = new NerveCenter();
+		expect( function () {
+			nc.initializeDataPoint( 'myKey', 'hindenberg' );
+		} ).toThrowError();
 	} );
 
 	it( 'allows data subscriptions to be alerted to changes in data', function () {
@@ -207,6 +265,25 @@ describe( 'NerveCenter data points', function () {
 		expect( unnamespacedCallback ).toHaveBeenCalled();
 		expect( namespacedCallback ).not.toHaveBeenCalled();
 
+	} );
+
+	//This fails because the callback is wrapped.
+	//TODO: Make this not fail - #13
+	xit( 'unbinds data subscriptions based on a handler', function () {
+		var nc = new NerveCenter();
+
+		var helloCallback = jasmine.createSpy( 'callback' );
+		var buhbyeCallback = jasmine.createSpy( 'callback' );
+
+		nc.subscribeToDataPoint( 'greeting', helloCallback );
+		nc.subscribeToDataPoint( 'greeting', buhbyeCallback );
+
+		nc.unsubscribeFromDataPoint( 'greeting', buhbyeCallback );
+
+		nc.setDataPoint( 'greeting', 'aloha' );
+
+		expect( helloCallback ).toHaveBeenCalled();
+		expect( buhbyeCallback ).not.toHaveBeenCalled();
 	} );
 
 	it( 'can pop on a dataPoint array', function () {

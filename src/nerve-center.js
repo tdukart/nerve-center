@@ -212,6 +212,12 @@ NerveCenter.prototype.subscribeToDataPoint = function ( key, handler ) {
 	this.subscribe( channel, wrappedHandler );
 };
 
+/**
+ * Unsubscribes from changes in a data point.
+ * @param {string} key
+ * @param {function(*)} handler DOES NOT WORK - use a namespace instead
+ * @todo Currently, unsubscribing using a handler doesn't work - issue #13
+ */
 NerveCenter.prototype.unsubscribeFromDataPoint = function ( key, handler ) {
 	var channel = formatDataKey( key );
 

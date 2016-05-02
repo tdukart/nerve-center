@@ -29,5 +29,7 @@
     "phantomjs-prebuilt": "^2.1.7",
     "statics": "^0.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "karma-coverage": "^0.5.5"
+  }
 }

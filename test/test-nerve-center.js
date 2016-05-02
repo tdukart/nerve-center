@@ -170,6 +170,17 @@ describe( 'NerveCenter data points', function () {
 
 	} );
 
+	it( 'allows data to be set in bulk', function () {
+		var nc = new NerveCenter();
+
+		nc.setDataPoints( { greeting: 'howdy', parting: 'goodbye' } );
+		var greeting = nc.getDataPoint( 'greeting' );
+		var parting = nc.getDataPoint( 'parting' );
+
+		expect( greeting ).toBe( 'howdy' );
+		expect( parting ).toBe( 'goodbye' );
+	} );
+
 	it( 'enforces data point types', function () {
 
 		var nc = new NerveCenter();
@@ -182,10 +193,40 @@ describe( 'NerveCenter data points', function () {
 
 	} );
 
+	it( 'enforces data point types when setting in bulk', function () {
+		var nc = new NerveCenter();
+		nc.initializeDataPoint( 'name', 'string' );
+		nc.initializeDataPoint( 'age', 'number' );
+
+		expect( function () {
+			nc.setDataPoints( {
+				name: 'John Hancock',
+				age : 'fish'
+			} )
+		} ).toThrowError();
+	} );
+
 	it( 'doesn\'t allow unknown data types', function () {
 		var nc = new NerveCenter();
 		expect( function () {
 			nc.initializeDataPoint( 'myKey', 'hindenberg' );
+		} ).toThrowError();
+	} );
+
+	it( 'allows data to be initialized in bulk', function () {
+		var nc = new NerveCenter();
+
+		nc.initializeDataPoints( { name: 'string', age: 'number' } );
+		expect( function () {
+			nc.setDataPoint( 'name', 'John Hancock' );
+		} ).not.toThrowError();
+
+		expect( function () {
+			nc.setDataPoint( 'age', 25 );
+		} ).not.toThrowError();
+
+		expect( function () {
+			nc.setDataPoint( 'age', 'fish' );
 		} ).toThrowError();
 	} );
 

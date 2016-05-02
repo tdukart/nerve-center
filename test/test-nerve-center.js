@@ -230,6 +230,32 @@ describe( 'NerveCenter data points', function () {
 		} ).toThrowError();
 	} );
 
+	it( 'enforces strict mode', function () {
+		var nc = new NerveCenter( { strictMode: true } );
+		nc.initializeDataPoint( 'initializedPoint', 'string' );
+
+		expect( function () {
+			nc.setDataPoint( 'initializedPoint', 'foobar' );
+		} ).not.toThrowError();
+
+		expect( function () {
+			nc.setDataPoint( 'uninitializedPoint', 'wee!' )
+		} ).toThrowError();
+	} );
+
+	it( 'does not enforce strict mode when strict mode is false', function () {
+		var nc = new NerveCenter( { strictMode: false } );
+		nc.initializeDataPoint( 'initializedPoint', 'string' );
+
+		expect( function () {
+			nc.setDataPoint( 'initializedPoint', 'foobar' );
+		} ).not.toThrowError();
+
+		expect( function () {
+			nc.setDataPoint( 'uninitializedPoint', 'wee!' )
+		} ).not.toThrowError();
+	} );
+
 	it( 'allows data subscriptions to be alerted to changes in data', function () {
 
 		var nc = new NerveCenter();

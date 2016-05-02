@@ -1,14 +1,32 @@
 /**
  * Creates a new NerveCenter.
+ * @param {Object} [options]
+ * @param {boolean} [options.strictMode] If true, requires all data points to be initialized first.
  * @returns {NerveCenter}
  * @constructor
  */
-var NerveCenter = function () {
+var NerveCenter = function ( options ) {
 	this._subscriptions = {};
 	this._dataFormats = {};
 	this._data = {};
 
+	var effectiveOptions = {};
+
+	Object.keys( NerveCenter.defaultOptions ).forEach( function ( optionKey ) {
+		if ( options && 'undefined' !== typeof options[ optionKey ] ) {
+			effectiveOptions[ optionKey ] = options[ optionKey ];
+		} else {
+			effectiveOptions[ optionKey ] = NerveCenter.defaultOptions[ optionKey ];
+		}
+	} );
+
+	this._options = effectiveOptions;
+
 	return this;
+};
+
+NerveCenter.defaultOptions = {
+	strictMode: false
 };
 
 /**
@@ -146,6 +164,9 @@ NerveCenter.prototype.initializeDataPoint = function ( key, type, initialValue )
  */
 NerveCenter.prototype.setDataPoint = function ( key, value ) {
 	if ( undefined === this._dataFormats[ key ] ) {
+		if ( this._options.strictMode ) {
+			throw new Error( 'Strict mode is active. Data points must be initialized before use.' )
+		}
 		this.initializeDataPoint( key, 'any', value );
 	} else {
 		// Allow nulls

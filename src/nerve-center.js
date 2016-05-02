@@ -157,6 +157,20 @@ NerveCenter.prototype.initializeDataPoint = function ( key, type, initialValue )
 };
 
 /**
+ * Initializes data points in bulk.
+ * @param {Object} data A key-value hash of key: type.
+ */
+NerveCenter.prototype.initializeDataPoints = function ( data ) {
+	var keys = Object.keys( data ),
+		key;
+
+	for ( var i = 0; i < keys.length; i++ ) {
+		key = keys[ i ];
+		this.initializeDataPoint( key, data[ key ] );
+	}
+};
+
+/**
  * Set the value of a data point.
  * @param {string} key
  * @param {*} value
@@ -179,6 +193,20 @@ NerveCenter.prototype.setDataPoint = function ( key, value ) {
 		var oldValue = this._data[ key ];
 		this._data[ key ] = value;
 		this._triggerDataPointChange( key, oldValue, value );
+	}
+};
+
+/**
+ * Sets multiple data points in bulk.
+ * @param {Object} data A key-value object for points to set.
+ */
+NerveCenter.prototype.setDataPoints = function ( data ) {
+	var keys = Object.keys( data ),
+		key;
+
+	for ( var i = 0; i < keys.length; i++ ) {
+		key = keys[ i ];
+		this.setDataPoint( key, data[ key ] );
 	}
 };
 

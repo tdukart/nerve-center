@@ -1,6 +1,6 @@
 {
   "name": "nerve-center",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Lightweight message library for games",
   "main": "src/nerve-center.js",
   "scripts": {
